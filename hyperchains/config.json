@@ -1,1 +1,46 @@
-[]
+[
+  {
+    "network": {
+      "id": 270,
+      "key": "dev",
+      "name": "ZkSync Local",
+      "rpcUrl": "http://127.0.0.1:3050",
+      "l1Network": {
+        "id": 9,
+        "name": "Ethereum Local",
+        "network": "localhost",
+        "nativeCurrency": {
+          "name": "Ether",
+          "symbol": "ETH",
+          "decimals": 18
+        },
+        "rpcUrls": {
+          "default": {
+            "http": ["http://127.0.0.1:8545"]
+          },
+          "public": {
+            "http": ["http://127.0.0.1:8545"]
+          }
+        }
+      }
+    },
+    "tokens": [
+      {
+        "address": "0x0000000000000000000000000000000000000000",
+        "l1Address": "0x0000000000000000000000000000000000000000",
+        "symbol": "ETH",
+        "name": "Ether",
+        "decimals": 18,
+        "iconUrl": "/img/eth.svg"
+      },
+      {
+        "address": "0x000000000000000000000000000000000000800A",
+        "l1Address": "0xd47a77a7a93c099a451a2c269ea5fb35238dc52c",
+        "symbol": "LBC",
+        "name": "Lambdacoin",
+        "decimals": 18,
+        "iconUrl": "/img/lambda.png"
+      }
+    ]
+  }
+]
