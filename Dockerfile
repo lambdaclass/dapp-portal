@@ -1,19 +1,36 @@
-FROM node:18-buster
+FROM node:18.17.1-alpine AS base-stage
+ENV NODE_ENV=production
 
-RUN apt-get update && \
-    apt-get install -y git
+WORKDIR /usr/src/app
+RUN apk add --update python3 make g++ && rm -rf /var/cache/apk/*
 
-WORKDIR /app
+COPY --chown=node:node .npmrc .npmrc
+COPY --chown=node:node package*.json ./
+RUN npm ci --ignore-scripts && npm cache clean --force
+COPY --chown=node:node . ./
+RUN rm -f .npmrc
 
-RUN git clone https://github.com/matter-labs/dapp-portal.git /app
+FROM base-stage AS development-stage
+ENV NODE_ENV=development
+COPY --chown=node:node .npmrc .npmrc
+RUN npm ci
+RUN rm -f .npmrc
 
-RUN npm install
+FROM development-stage AS build-stage
+RUN npm run generate
+RUN npm run prepare
 
-COPY . .
+FROM base-stage AS production-stage
+COPY --chown=node:node --from=build-stage /usr/src/app/dist ./dist
+RUN npm i -g http-server
 
-EXPOSE 3000
+ARG NODE_ENV=production
+ENV NODE_ENV $NODE_ENV
 
-# This is the development configuration, we need to use the production one for
-# real purposes.
-CMD ["npm", "run", "dev", "--host"]
+ARG PORT=3000
+ENV PORT $PORT
 
+USER node
+WORKDIR /usr/src/app/dist
+
+CMD http-server -p $PORT -c-1 --proxy="http://127.0.0.1:$PORT/index.html?"
