@@ -71,7 +71,7 @@ const publicChains: ZkSyncNetwork[] = [
     key: "shyft-devnet",
     name: "Shyft Devnet",
     rpcUrl: "https://dev.rpc.sepolia.shyft.lambdaclass.com",
-    blockExplorerApi: "http://35.204.251.135:3020",
+    blockExplorerApi: "https://k8s.explorer.api.sepolia.shyft.lambdaclass.com",
     blockExplorerUrl: "https://k8s.explorer.sepolia.shyft.lambdaclass.com",
     l1Network: {
       id: 11155111,
@@ -83,10 +83,10 @@ const publicChains: ZkSyncNetwork[] = [
       },
       rpcUrls: {
         default: {
-          http: ["http://eth-sepolia"],
+          http: ["https://rpc.sepolia.org"],
         },
         public: {
-          http: ["http://eth-sepolia"],
+          http: ["https://rpc.sepolia.org"],
         },
       },
     },
