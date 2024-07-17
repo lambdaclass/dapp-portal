@@ -70,7 +70,7 @@ const publicChains: ZkSyncNetwork[] = [
     id: 270,
     key: "shyft-devnet",
     name: "Shyft Devnet",
-    rpcUrl: "https://dev.rpc.sepolia.shyft.lambdaclass.com",
+    rpcUrl: "https://k8s.rpc.sepolia.shyft.lambdaclass.com",
     blockExplorerApi: "https://k8s.explorer.api.sepolia.shyft.lambdaclass.com",
     blockExplorerUrl: "https://k8s.explorer.sepolia.shyft.lambdaclass.com",
     l1Network: {
