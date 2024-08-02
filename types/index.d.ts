@@ -142,21 +142,6 @@ declare global {
           dataplaneUrl: string;
         }
       }
-      hyperchain?: {
-        id: number;
-        key: string;
-        name: string;
-        rpcUrl: string;
-        hidden?: boolean;
-        deprecated?: boolean;
-        l1Network?: L1Network;
-        blockExplorerUrl?: string;
-        blockExplorerApi?: string;
-        displaySettings?: {
-          showPartnerLinks?: boolean;
-        };
-        tokens: Token[],
-      }
     }
   }
 }

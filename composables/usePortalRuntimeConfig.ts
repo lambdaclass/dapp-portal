@@ -3,7 +3,7 @@ export const usePortalRuntimeConfig = () => {
 
   // Important: before adding new env variables, make sure to list them as public in `nuxt.config.ts`
   return {
-    nodeType: runtimeConfig?.nodeType || (process.env.NODE_TYPE as undefined | "memory" | "dockerized" | "hyperchain"),
+    nodeType: runtimeConfig?.nodeType || (process.env.NODE_TYPE as undefined | "memory" | "dockerized" | "hyperchain" | "hyperchain-docker"),
     walletConnectProjectId: runtimeConfig?.walletConnectProjectId || process.env.WALLET_CONNECT_PROJECT_ID,
     ankrToken: runtimeConfig?.ankrToken || process.env.ANKR_TOKEN,
     screeningApiUrl: runtimeConfig?.screeningApiUrl || process.env.SCREENING_API_URL,
@@ -15,6 +15,5 @@ export const usePortalRuntimeConfig = () => {
           }
         : undefined,
     },
-    hyperchain: runtimeConfig?.hyperchain
   };
 };

@@ -11,6 +11,7 @@
     "generate:node:memory": "cross-env NODE_TYPE=memory npm run generate",
     "generate:node:docker": "cross-env NODE_TYPE=dockerized npm run generate",
     "generate:node:hyperchain": "ts-node --transpile-only scripts/hyperchains/empty-check.ts && cross-env NODE_TYPE=hyperchain npm run generate",
+    "generate:node:hyperchain:docker": "mkdir -p public/hyperchains/ && cp hyperchains/config.json public/hyperchains/config.json && cross-env NODE_TYPE=hyperchain-docker npm run generate",
     "generate-meta": "ts-node --transpile-only scripts/updateBridgeMetaTags.ts",
     "hyperchain:create": "ts-node --transpile-only scripts/hyperchains/create.ts",
     "preview": "nuxt preview",

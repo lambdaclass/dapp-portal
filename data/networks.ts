@@ -5,6 +5,7 @@ import { PUBLIC_L1_CHAINS, type Config } from "@/scripts/hyperchains/common";
 
 import type { Token } from "@/types";
 import type { Chain } from "@wagmi/core/chains";
+import type { AppConfig } from "nuxt/schema";
 
 const portalRuntimeConfig = usePortalRuntimeConfig();
 
@@ -130,6 +131,11 @@ const determineChainList = (): ZkSyncNetwork[] => {
       return [dockerizedNode];
     case "hyperchain":
       return getHyperchains();
+    case "hyperchain-docker":
+      if (useAppConfig()) {
+        return [appConfigToZkSyncNetwork(useAppConfig())];
+      }
+      return [...publicChains];
     default:
       return [...publicChains];
   }
@@ -137,3 +143,21 @@ const determineChainList = (): ZkSyncNetwork[] => {
 export const isCustomNode = !!nodeType;
 export const chainList: ZkSyncNetwork[] = determineChainList();
 export const defaultNetwork = chainList[0];
+
+function appConfigToZkSyncNetwork(appConfig: AppConfig): ZkSyncNetwork {
+  console.log(`App Config ${appConfig}`);
+  let net: ZkSyncNetwork =
+  {
+    id: 324,
+    key: "mainnet",
+    name: "zkSync",
+    rpcUrl: "https://mainnet.era.zksync.io",
+    blockExplorerUrl: "https://era.zksync.network",
+    blockExplorerApi: "https://block-explorer-api.mainnet.zksync.io",
+    displaySettings: {
+      showPartnerLinks: true,
+    },
+    l1Network: l1Networks.mainnet,
+  };
+  return net;
+}

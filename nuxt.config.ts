@@ -1,3 +1,5 @@
+import path from "path";
+import fs from 'fs'
 import { portal as portalMeta } from "./data/meta";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -41,10 +43,10 @@ export default defineNuxtConfig({
         },
         process.env.RUDDER_KEY
           ? {
-              hid: "Rudder-JS",
-              src: "https://cdn.rudderlabs.com/v1.1/rudder-analytics.min.js",
-              defer: true,
-            }
+            hid: "Rudder-JS",
+            src: "https://cdn.rudderlabs.com/v1.1/rudder-analytics.min.js",
+            defer: true,
+          }
           : undefined,
       ],
     },
