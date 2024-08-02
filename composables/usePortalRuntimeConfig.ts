@@ -1,6 +1,16 @@
+import { L2_BASE_TOKEN_ADDRESS, ETH_ADDRESS } from "zksync-ethers/build/utils";
+
+import type { Token } from "@/types";
 export const usePortalRuntimeConfig = () => {
   const runtimeConfig = window && window["##runtimeConfig"];
-
+  const baseToken: Token = {
+    address: L2_BASE_TOKEN_ADDRESS,
+    l1Address: process.env.BT_L1_ADDRESS || ETH_ADDRESS,
+    symbol: process.env.BT_SYMBOL || "ETH",
+    name: process.env.BT_NAME || "Ether",
+    decimals: Number(process.env.BT_DECIMALS) || 18,
+    iconUrl: process.env.BT_ICON || "/img/eth.svg",
+  };
   // Important: before adding new env variables, make sure to list them as public in `nuxt.config.ts`
   return {
     nodeType: runtimeConfig?.nodeType || (process.env.NODE_TYPE as undefined | "memory" | "dockerized" | "hyperchain"),
@@ -15,5 +25,6 @@ export const usePortalRuntimeConfig = () => {
           }
         : undefined,
     },
+    baseToken,
   };
 };

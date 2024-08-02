@@ -245,7 +245,7 @@
                   <CommonAlert variant="error" :icon="ExclamationTriangleIcon">
                     <p>
                       {{
-                        selectedToken?.address === ETH_TOKEN.address
+                        selectedToken?.address === L2_BASE_TOKEN_ADDRESS
                           ? "The fee has changed since the last estimation. "
                           : ""
                       }}Insufficient <span class="font-medium">{{ selectedToken?.symbol }}</span> balance to pay for
@@ -283,6 +283,7 @@ import { ArrowTopRightOnSquareIcon, ExclamationTriangleIcon, InformationCircleIc
 import { useRouteQuery } from "@vueuse/router";
 import { BigNumber } from "ethers";
 import { isAddress } from "ethers/lib/utils";
+import { L2_BASE_TOKEN_ADDRESS } from "zksync-ethers/build/utils";
 
 import useFee from "@/composables/zksync/useFee";
 import useTransaction, { isWithdrawalManualFinalizationRequired } from "@/composables/zksync/useTransaction";

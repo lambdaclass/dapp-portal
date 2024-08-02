@@ -2,6 +2,7 @@ import { useMemoize } from "@vueuse/core";
 import { BigNumber, type BigNumberish } from "ethers";
 import { Wallet } from "zksync-ethers";
 import IL1SharedBridge from "zksync-ethers/abi/IL1SharedBridge.json";
+import { L2_BASE_TOKEN_ADDRESS } from "zksync-ethers/build/utils";
 
 import type { Hash } from "@/types";
 
@@ -42,7 +43,7 @@ export default (transactionInfo: ComputedRef<TransactionInfo>) => {
     return calculateFee(gasLimit.value, gasPrice.value).toString();
   });
   const feeToken = computed(() => {
-    return tokens.value?.[ETH_TOKEN.address];
+    return tokens.value?.[L2_BASE_TOKEN_ADDRESS];
   });
 
   const getFinalizationParams = async () => {

@@ -103,11 +103,13 @@ const publicChains: ZkSyncNetwork[] = [
 ];
 
 const getHyperchains = (): ZkSyncNetwork[] => {
+  const baseToken = portalRuntimeConfig.baseToken;
   const hyperchains = Hyperchains as Config;
   return hyperchains.map((e) => {
+    const tokens = e.tokens || [baseToken];
     const network: ZkSyncNetwork = {
       ...e.network,
-      getTokens: () => e.tokens,
+      getTokens: () => tokens,
     };
     if (e.network.publicL1NetworkId) {
       network.l1Network = PUBLIC_L1_CHAINS.find((chain) => chain.id === e.network.publicL1NetworkId);

@@ -9,6 +9,7 @@ export default (
   tokenAddress: Ref<string | undefined>,
   getContractAddress: () => Promise<string | undefined>
 ) => {
+  const baseToken = usePortalRuntimeConfig().baseToken;
   const { getPublicClient, getWallet } = useOnboardStore();
   const {
     result,
@@ -36,7 +37,7 @@ export default (
   );
 
   const requestAllowance = async () => {
-    if (accountAddress.value && tokenAddress.value && tokenAddress.value !== ETH_TOKEN.l1Address) {
+    if (accountAddress.value && tokenAddress.value && tokenAddress.value !== baseToken.l1Address) {
       await getAllowance();
     } else {
       reset();

@@ -1,4 +1,5 @@
 import { $fetch } from "ofetch";
+import { L2_BASE_TOKEN_ADDRESS } from "zksync-ethers/build/utils";
 
 import { customBridgeTokens } from "@/data/customBridgeTokens";
 
@@ -15,6 +16,7 @@ export const useZkSyncTokensStore = defineStore("zkSyncTokens", () => {
     execute: requestTokens,
     reset: resetTokens,
   } = usePromise<Token[]>(async () => {
+    const baseToken = usePortalRuntimeConfig().baseToken;
     if (eraNetwork.value.blockExplorerApi) {
       const responses: Api.Response.Collection<Api.Response.Token>[] = await Promise.all([
         $fetch(`${eraNetwork.value.blockExplorerApi}/tokens?minLiquidity=0&limit=100&page=1`),
@@ -22,14 +24,14 @@ export const useZkSyncTokensStore = defineStore("zkSyncTokens", () => {
         $fetch(`${eraNetwork.value.blockExplorerApi}/tokens?minLiquidity=0&limit=100&page=3`),
       ]);
       const explorerTokens = responses.map((response) => response.items.map(mapApiToken)).flat();
-      const etherExplorerToken = explorerTokens.find((token) => token.address === ETH_TOKEN.address);
-      const tokensWithoutEther = explorerTokens.filter((token) => token.address !== ETH_TOKEN.address);
-      return [etherExplorerToken || ETH_TOKEN, ...tokensWithoutEther] as Token[];
+      const etherExplorerToken = explorerTokens.find((token) => token.address === L2_BASE_TOKEN_ADDRESS);
+      const tokensWithoutBaseToken = explorerTokens.filter((token) => token.address !== L2_BASE_TOKEN_ADDRESS);
+      return [etherExplorerToken || baseToken, ...tokensWithoutBaseToken] as Token[];
     }
     if (eraNetwork.value.getTokens) {
       return await eraNetwork.value.getTokens();
     } else {
-      return [ETH_TOKEN];
+      return [baseToken];
     }
   });
 

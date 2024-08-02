@@ -1,4 +1,5 @@
 import { BigNumber } from "ethers";
+import { L2_BASE_TOKEN_ADDRESS } from "zksync-ethers/build/utils";
 
 import type { Token, TokenAmount } from "@/types";
 import type { BigNumberish } from "ethers";
@@ -27,7 +28,7 @@ export default (
   });
 
   const feeToken = computed(() => {
-    return tokens.value?.[ETH_TOKEN.address];
+    return tokens.value?.[L2_BASE_TOKEN_ADDRESS];
   });
   const enoughBalanceToCoverFee = computed(() => {
     if (!feeToken.value || inProgress.value) {
@@ -50,6 +51,8 @@ export default (
     async () => {
       if (!params) throw new Error("Params are not available");
 
+      const baseToken = usePortalRuntimeConfig().baseToken;
+
       const provider = getProvider();
       const tokenBalance = balances.value.find((e) => e.address === params!.tokenAddress)?.amount || "1";
       const [price, limit] = await Promise.all([
@@ -58,7 +61,7 @@ export default (
           return provider[params!.type === "transfer" ? "estimateGasTransfer" : "estimateGasWithdraw"]({
             from: params!.from,
             to: params!.to,
-            token: params!.tokenAddress === ETH_TOKEN.address ? ETH_TOKEN.l1Address! : params!.tokenAddress,
+            token: params!.tokenAddress === L2_BASE_TOKEN_ADDRESS ? baseToken.l1Address! : params!.tokenAddress,
             amount: tokenBalance,
           });
         }),

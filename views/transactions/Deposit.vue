@@ -189,7 +189,7 @@
                 >{{
                   feeToken?.price
                     ? removeSmallAmountPretty(recommendedBalance, feeToken?.decimals, feeToken?.price)
-                    : parseTokenAmount(recommendedBalance, ETH_TOKEN.decimals)
+                    : parseTokenAmount(recommendedBalance, baseToken.decimals)
                 }}
                 {{ feeToken?.symbol }}</span
               >
@@ -400,6 +400,7 @@ const { destinations } = storeToRefs(useDestinationsStore());
 const { l1BlockExplorerUrl } = storeToRefs(useNetworkStore());
 const { l1Tokens, tokensRequestInProgress, tokensRequestError } = storeToRefs(tokensStore);
 const { balance, balanceInProgress, balanceError } = storeToRefs(zkSyncEthereumBalance);
+const baseToken = usePortalRuntimeConfig().baseToken;
 
 const toNetworkModalOpened = ref(false);
 const toNetworkSelected = (networkKey?: string) => {
@@ -431,7 +432,7 @@ const routeTokenAddress = computed(() => {
   return checksumAddress(route.query.token);
 });
 const defaultToken = computed(
-  () => availableTokens.value.find((e) => e.address === ETH_TOKEN.l1Address) ?? availableTokens.value[0] ?? undefined
+  () => availableTokens.value.find((e) => e.address === baseToken.l1Address) ?? availableTokens.value[0] ?? undefined
 );
 const selectedTokenAddress = ref<string | undefined>(routeTokenAddress.value ?? defaultToken.value?.address);
 const selectedToken = computed<Token | undefined>(() => {

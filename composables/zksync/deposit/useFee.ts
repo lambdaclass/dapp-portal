@@ -42,7 +42,11 @@ export default (tokens: Ref<Token[]>, balances: Ref<TokenAmount[] | undefined>) 
   });
 
   const feeToken = computed(() => {
-    return tokens.value.find((e) => e.address === ETH_TOKEN.l1Address);
+    // A good option is:
+    // Gas from L1 -> L2 in ETH
+    // Gas from L1 <- L2 in BaseToken
+    // return tokens.value.find((e) => e.address === ETH_ADDRESS);
+    return ETH_TOKEN;
   });
   const enoughBalanceToCoverFee = computed(() => {
     if (!feeToken.value || !balances.value || inProgress.value) {
@@ -62,14 +66,14 @@ export default (tokens: Ref<Token[]>, balances: Ref<TokenAmount[] | undefined>) 
 
     return await retry(() =>
       signer.getFullRequiredDepositFee({
-        token: ETH_TOKEN.l1Address!,
+        token: utils.ETH_ADDRESS,
         to: params.to,
       })
     );
   };
   const getERC20TransactionFee = () => {
     return {
-      l1GasLimit: BigNumber.from(utils.L1_RECOMMENDED_MIN_ERC20_DEPOSIT_GAS_LIMIT),
+      l1GasLimit: BigNumber.from(utils.L1_RECOMMENDED_MIN_ERC20_DEPOSIT_GAS_LIMIT * 100),
     };
   };
   const getGasPrice = async () => {

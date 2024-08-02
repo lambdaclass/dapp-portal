@@ -1,3 +1,5 @@
+import { L2_BASE_TOKEN_ADDRESS } from "zksync-ethers/build/utils";
+
 import type { Api, Token, TokenAmount } from "@/types";
 
 export const groupBalancesByAmount = <T = TokenAmount>(balances: Ref<T[]>) =>
@@ -33,9 +35,10 @@ export const groupBalancesByAmount = <T = TokenAmount>(balances: Ref<T[]>) =>
   });
 
 export const mapApiToken = (token: Api.Response.Token): Token => {
-  if (token.l2Address === ETH_TOKEN.address) {
+  if (token.l2Address === L2_BASE_TOKEN_ADDRESS) {
+    const baseToken = usePortalRuntimeConfig().baseToken;
     return {
-      ...ETH_TOKEN,
+      ...baseToken,
       price: token.usdPrice || undefined,
     };
   }
