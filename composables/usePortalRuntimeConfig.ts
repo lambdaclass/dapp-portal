@@ -10,9 +10,9 @@ export const usePortalRuntimeConfig = () => {
     analytics: {
       rudder: runtimeConfig?.analytics?.rudder
         ? {
-            key: (runtimeConfig.analytics.rudder.key || process.env.RUDDER_KEY)!,
-            dataplaneUrl: (runtimeConfig.analytics.rudder.dataplaneUrl || process.env.DATAPLANE_URL)!,
-          }
+          key: (runtimeConfig.analytics.rudder.key || process.env.RUDDER_KEY)!,
+          dataplaneUrl: (runtimeConfig.analytics.rudder.dataplaneUrl || process.env.DATAPLANE_URL)!,
+        }
         : undefined,
     },
   };

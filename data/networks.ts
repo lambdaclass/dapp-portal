@@ -145,8 +145,8 @@ export const chainList: ZkSyncNetwork[] = determineChainList();
 export const defaultNetwork = chainList[0];
 
 function appConfigToZkSyncNetwork(appConfig: AppConfig): ZkSyncNetwork {
-  console.log(`App Config ${appConfig}`);
-  let net: ZkSyncNetwork =
+  window.console.log(`App Config ${appConfig}`);
+  const net: ZkSyncNetwork =
   {
     id: 324,
     key: "mainnet",
